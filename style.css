@@ -1,0 +1,170 @@
+/* ==========================================================
+   style.css - SPIDER-VERSE edition (FIS1104 sample)
+   Style: classic American comic + multiverse collage + street youth
+   Palette: Ink #111 | Spidey Red #e5192f | Electric Blue #1e3cff
+            Street Yellow #ffe500 | Glitch Pink #ff2d9b | Paper #fbf7ea
+   ========================================================== */
+
+/* 1. Tokens */
+:root {
+  --ink: #111; --red: #e5192f; --blue: #1e3cff;
+  --yellow: #ffe500; --pink: #ff2d9b; --paper: #fbf7ea;
+  --line: 6px solid var(--ink);
+  --pop: 12px 12px 0 var(--ink);               /* hard comic drop shadow */
+  --dots: radial-gradient(circle, rgba(17,17,17,.22) 1.6px, transparent 2px); /* Ben-Day halftone */
+}
+
+/* 2. Base */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; color: var(--ink); line-height: 1.6;
+  font-family: "Archivo", "Arial Narrow", Arial, sans-serif;
+  background: var(--paper) var(--dots); background-size: 12px 12px;
+}
+h1, h2, h3 { font-family: "Bangers", Impact, sans-serif; letter-spacing: 2px; line-height: 1; margin: 0 0 14px; text-transform: uppercase; }
+h2 { font-size: clamp(2.2rem, 6vw, 3.6rem); }
+a { color: var(--blue); font-weight: 800; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+textarea:focus-visible, summary:focus-visible { outline: 4px solid var(--pink); outline-offset: 3px; }
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 8px; top: 8px; z-index: 99; background: var(--yellow); padding: 6px 10px; border: var(--line); }
+
+/* 3. Navigation: sticker-style buttons */
+.nav { position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 4vw; background: var(--ink); border-bottom: 5px solid var(--red); }
+.nav .brand { display: flex; align-items: center; gap: 8px; margin-right: auto; color: var(--yellow); text-decoration: none; font-family: "Bangers", Impact, sans-serif; font-size: 1.6rem; letter-spacing: 2px; }
+.nav .brand img { width: 34px; height: 40px; border: 3px solid var(--yellow); object-fit: cover; }
+.nav ul { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.nav ul a { display: block; padding: 4px 12px; color: var(--ink); background: var(--paper); text-decoration: none; border: 3px solid var(--paper); transform: rotate(-2deg); transition: transform .15s, background .15s; }
+.nav ul li:nth-child(even) a { transform: rotate(2deg); }
+.nav ul a:hover, .nav ul a:focus-visible { background: var(--yellow); transform: rotate(0) scale(1.1); }
+
+/* 4. Ticker (marquee) */
+.ticker { overflow: hidden; background: var(--yellow); border-block: var(--line); white-space: nowrap; }
+.ticker span { display: inline-block; padding: 8px 0; font-family: "Bangers", Impact, sans-serif; font-size: 1.3rem; letter-spacing: 3px; animation: ticker 18s linear infinite; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* 5. Sections */
+main section { max-width: 1120px; margin: 0 auto; padding: 60px 4vw; }
+.tag { display: inline-block; font-family: "Permanent Marker", "Comic Sans MS", cursive; color: var(--pink); font-size: 1.3rem; transform: rotate(-3deg); }
+
+/* 6. Comic panels (CSS Grid, uneven sizes + slight tilt) */
+.panels { display: grid; grid-template-columns: repeat(6, 1fr); gap: 26px; }
+.panel { position: relative; background: #fff; border: var(--line); box-shadow: var(--pop); padding: 40px 20px 20px; transform: rotate(-1deg); transition: transform .2s; }
+.panel:nth-child(even) { transform: rotate(1deg); }
+.panel:hover { transform: rotate(0) translate(-4px, -4px); }
+.panel:nth-child(1) { grid-column: span 4; background: #fff var(--dots); background-size: 10px 10px; }
+.panel:nth-child(2) { grid-column: span 2; background: var(--blue); color: #fff; }
+.panel:nth-child(3) { grid-column: span 2; background: var(--yellow); }
+.panel:nth-child(4) { grid-column: span 4; }
+/* Narration caption box made with a pseudo-element */
+.panel::before { content: attr(data-cap); position: absolute; top: -3px; left: -3px; padding: 3px 12px; background: var(--yellow); color: var(--ink); border: 3px solid var(--ink); font-family: "Bangers", Impact, sans-serif; letter-spacing: 1px; }
+.panel h3 { font-size: 1.9rem; }
+.panel img { width: 100%; max-width: 260px; border: var(--line); display: block; margin-top: 12px; }
+.panel figcaption { font-size: .8rem; font-weight: 700; }
+figure { margin: 0; }
+/* Speech bubble with tail */
+.bubble { position: relative; display: inline-block; margin: 6px 0 20px; padding: 8px 16px; background: #fff; color: var(--ink); border: 3px solid var(--ink); border-radius: 50% / 40%; font-weight: 800; }
+.bubble::after { content: ""; position: absolute; left: 28px; bottom: -16px; border: 9px solid transparent; border-top-color: var(--ink); }
+/* Sound-effect burst */
+.burst { display: inline-block; padding: 26px 30px; background: var(--red); color: var(--yellow); font-family: "Bangers", Impact, sans-serif; font-size: 2.2rem; text-shadow: 3px 3px 0 var(--ink); clip-path: polygon(50% 0, 62% 18%, 85% 10%, 80% 33%, 100% 42%, 82% 56%, 92% 80%, 68% 76%, 55% 100%, 42% 78%, 15% 90%, 22% 62%, 0 50%, 20% 38%, 12% 14%, 36% 22%); }
+
+/* 7. Multiverse collage: overlapping, rotated cards */
+.collage { display: flex; flex-wrap: wrap; justify-content: center; }
+.uni { width: 230px; margin: 0 -14px; background: #fff; border: var(--line); box-shadow: var(--pop); text-align: center; padding-bottom: 10px; transition: transform .25s, z-index .25s; }
+.uni img { width: 100%; display: block; border-bottom: var(--line); }
+.uni:nth-child(1) { transform: rotate(-6deg); }
+.uni:nth-child(2) { transform: translateY(-18px) rotate(3deg); z-index: 2; }
+.uni:nth-child(3) { transform: rotate(7deg); }
+.uni:hover { transform: rotate(0) scale(1.1); z-index: 5; }
+.uni:nth-child(3) img { filter: contrast(1.3); animation: glitch 2.5s steps(1) infinite; }
+.uni h3 { font-size: 1.4rem; margin: 10px 0 0; }
+
+/* 8. Plot twist (dark glitch band) */
+.twist { max-width: none !important; background: var(--ink); color: #fff; border-block: 8px solid var(--pink); }
+.twist > * { max-width: 960px; margin-inline: auto; }
+.glitch { position: relative; color: #fff; font-size: clamp(3rem, 10vw, 6rem); }
+.glitch::before, .glitch::after { content: attr(data-text); position: absolute; inset: 0; }
+.glitch::before { color: var(--pink); transform: translate(-4px, 0); animation: glitch 2s steps(1) infinite; mix-blend-mode: screen; }
+.glitch::after { color: #00e5ff; transform: translate(4px, 0); animation: glitch 2s steps(1) infinite reverse; mix-blend-mode: screen; }
+@keyframes glitch { 0%, 100% { clip-path: inset(0 0 0 0); } 20% { clip-path: inset(10% 0 60% 0); } 40% { clip-path: inset(55% 0 10% 0); } 60% { clip-path: inset(30% 0 35% 0); } 80% { clip-path: inset(75% 0 5% 0); } }
+.twist details { background: #1b1b1b; border: 4px solid var(--yellow); padding: 14px 18px; }
+.twist summary { cursor: pointer; font-family: "Bangers", Impact, sans-serif; font-size: 1.6rem; letter-spacing: 2px; color: var(--yellow); }
+
+/* 9. Table: "hero trading card" sheet */
+.table-wrap { overflow-x: auto; border: var(--line); box-shadow: var(--pop); background: #fff; }
+table { border-collapse: collapse; width: 100%; min-width: 640px; }
+caption { text-align: left; padding: 10px; font-family: "Bangers", Impact, sans-serif; letter-spacing: 2px; font-size: 1.4rem; background: var(--yellow); border-bottom: var(--line); }
+th, td { border: 3px solid var(--ink); padding: 10px 12px; text-align: left; vertical-align: top; }
+thead th { background: var(--red); color: #fff; font-family: "Bangers", Impact, sans-serif; letter-spacing: 1.5px; }
+tbody tr:nth-child(even) { background: #fff3a8; }
+tbody tr { transition: background .15s; }
+tbody tr:hover { background: #bfe0ff; }
+tfoot td { background: var(--ink); color: var(--yellow); font-weight: 800; }
+table table { min-width: 0; }
+table table th, table table td { border-width: 2px; padding: 3px 8px; font-size: .9rem; }
+
+/* 10. Media */
+.media { display: grid; gap: 14px; justify-items: start; }
+video, audio { width: 100%; max-width: 760px; border: var(--line); box-shadow: var(--pop); background: var(--ink); }
+
+/* 11. Form: "graffiti wall" */
+form { display: grid; gap: 16px; padding: 26px; background: var(--blue); color: #fff; border: var(--line); box-shadow: var(--pop); }
+form label { display: grid; gap: 5px; font-weight: 800; }
+fieldset { border: 3px dashed var(--yellow); padding: 10px 16px; }
+legend { font-family: "Permanent Marker", cursive; color: var(--yellow); font-size: 1.2rem; }
+fieldset label { display: block; }
+input, select, textarea { font: inherit; padding: 10px; color: var(--ink); background: #fff; border: 3px solid var(--ink); }
+input:invalid:not(:placeholder-shown) { border-color: var(--red); background: #ffe3e6; }
+input:valid:not(:placeholder-shown) { border-color: #00b86b; }
+button { justify-self: start; font-family: "Bangers", Impact, sans-serif; font-size: 1.6rem; letter-spacing: 2px; padding: 8px 30px; background: var(--red); color: #fff; border: var(--line); box-shadow: 5px 5px 0 var(--ink); cursor: pointer; transition: transform .1s, box-shadow .1s; }
+button:hover { background: var(--pink); }
+button:active { transform: translate(5px, 5px); box-shadow: none; }
+output { font-weight: 800; background: var(--ink); padding: 4px 10px; }
+output.error { color: #ff9aa6; }
+output.ok { color: var(--yellow); }
+
+footer { background: var(--ink); color: #fff; text-align: center; padding: 30px 4vw; border-top: 8px solid var(--red); font-size: .9rem; }
+footer a { color: var(--yellow); }
+
+/* 12. Responsive */
+@media (max-width: 800px) {
+  .panels { grid-template-columns: 1fr; }
+  .panel:nth-child(n) { grid-column: auto; }
+  .uni { margin: 10px; }
+  .nav ul a { padding: 3px 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* 13. Movie stills (fit any image size using aspect-ratio + object-fit) */
+.still img, img.still { width: 100%; height: 100%; object-fit: cover; display: block; }
+.film { display: flex; justify-content: center; gap: 22px; padding: 26px 18px; background: var(--ink); border-block: var(--line); }
+/* Film-strip look: sprocket holes drawn with pseudo-elements */
+.frame { position: relative; flex: 1 1 0; max-width: 340px; margin: 0; padding: 14px 0; background: var(--ink); border: 4px solid var(--yellow); transform: rotate(-2deg); transition: transform .2s; }
+.frame:nth-child(2) { transform: rotate(2deg) translateY(-10px); }
+.frame::before, .frame::after { content: ""; position: absolute; left: 0; right: 0; height: 10px; background: repeating-linear-gradient(90deg, var(--yellow) 0 12px, transparent 12px 24px); }
+.frame::before { top: 2px; } .frame::after { bottom: 2px; }
+.frame .still { aspect-ratio: 16 / 9; border-block: 3px solid var(--paper); }
+.frame figcaption { padding: 6px 10px 0; color: var(--yellow); font-size: .75rem; font-weight: 800; }
+.frame:hover { transform: rotate(0) scale(1.06); z-index: 3; }
+/* Stills inside comic panels */
+.panel .still-box { margin-top: 14px; border: var(--line); box-shadow: 5px 5px 0 var(--ink); aspect-ratio: 4 / 3; overflow: hidden; background: var(--ink); }
+.panel .still-box img { max-width: none; border: 0; margin: 0; height: 100%; }
+/* Wide still in the twist band with a glitch tint */
+.twist-still { position: relative; margin: 22px auto; border: 5px solid var(--yellow); aspect-ratio: 21 / 9; overflow: hidden; }
+.twist-still::after { content: ""; position: absolute; inset: 0; background: var(--pink); mix-blend-mode: color; opacity: .35; animation: glitch 3s steps(1) infinite; pointer-events: none; }
+.twist-still img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.twist-still figcaption { position: absolute; left: 0; bottom: 0; z-index: 2; background: var(--yellow); color: var(--ink); padding: 3px 12px; font-weight: 800; font-size: .8rem; }
+@media (max-width: 800px) {
+  .film { flex-direction: column; align-items: center; }
+  .frame, .frame:nth-child(2) { width: 88%; max-width: 420px; transform: none; }
+}
+body {
+  /* 使用内置指针或自定义图片指针 */
+  cursor: crosshair; /* 或者: cursor: url('spider-cursor.png'), auto; */
+}
+a, button {
+  cursor: pointer;
+}
